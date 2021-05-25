@@ -1,5 +1,9 @@
-resource "azurerm_resource_group" "example" {
-  name     = "aks-resource-group"
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "gitops-demo" {
+  name     = "aks-gitops-demo"
   location = "eastus"
 }
 
@@ -58,4 +62,8 @@ module "aks" {
   net_profile_service_cidr       = "10.0.0.0/16"
 
   depends_on = [module.network]
+}
+
+output "env-dynamic-url" {
+  value = azurerm_kubernetes_cluster.aks.kube_config.0.host
 }
