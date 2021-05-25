@@ -20,8 +20,8 @@ resource "gitlab_project_cluster" "aws_cluster" {
   name                  = module.aks.cluster_id
   domain                = "gitops-demo.cloudnua.com"
   environment_scope     = "aks/*"
-  kubernetes_api_url    = module.aks.cluster_endpoint
+  kubernetes_api_url    = module.aks.host
   kubernetes_token      = data.kubernetes_secret.gitlab-admin-token.data.token
-  kubernetes_ca_cert    = trimspace(base64decode(module.aks.cluster_certificate_authority_data))
+  kubernetes_ca_cert    = trimspace(base64decode(module.aks.cluster_ca_certificate))
   management_project_id = data.gitlab_projects.cluster-management-search.projects.0.id
 }
